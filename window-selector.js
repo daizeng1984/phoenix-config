@@ -14,7 +14,7 @@ function WindowSelector() {
 }
 WindowSelector.prototype.initialize = function () {
     var that = this;
-    this.windowList = Window.recent();
+    this.windowList = Window.all();
     this.pattern = '';
     this.selectedWindow = 0;
     this.matching = [];
@@ -172,11 +172,9 @@ WindowSelector.prototype.disableKeys = function () {
     });
 };
 WindowSelector.prototype.getRegexForPattern = function (pattern) {
-    var chars = pattern.split("");
-    var new_re = chars.join(".*");
-    var result = new RegExp(new_re, 'i');
+    var result = new RegExp(pattern, 'i');
     return result;
 };
 WindowSelector.prototype.windowTitle = function (w) {
-    return w.title() + " | " + w.app().name()
+    return w.app().name()
 };

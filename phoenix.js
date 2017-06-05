@@ -3,9 +3,9 @@
 
 Phoenix.set({ openAtLogin: true });
 
-var h_reload = new Key('r', ['alt'], function () {
-    Phoenix.reload();
-});
+//var h_reload = new Key('r', ['alt'], function () {
+//    Phoenix.reload();
+//});
 
 require('prefix-key.js');
 require('move-window-prefix-key.js');
@@ -13,7 +13,7 @@ require('window-selector.js');
 
 /* Window handling prefix key */
 
-var wPrefix = new MoveWindowPrefixKey('space', ['ctrl', 'alt', 'cmd'],
+var wPrefix = new MoveWindowPrefixKey('i', ['alt'],
     "h/l - Left/Right Half\nn - Centered Half Width\nc - Center\ng - Wide Center\nm - Max\no/p - big left/right\nO/P - medium left/right\n1/2 - top left/right\n3/4 - bottom left/right\ns - next screen\nr - reload\nesc - Abort");
 wPrefix.addSuffix('h', [], function () {
     wPrefix.moveWindow({x: 0, y: 0, width: 0.5, height: 1.0});
@@ -62,14 +62,38 @@ wPrefix.addSuffix('4', [], function () {
 });
 wPrefix.addSuffix('r', [], function () { Phoenix.reload(); });
 wPrefix.addSuffix('escape', [], function () {});
+wPrefix.addSuffix('[', ['ctrl'], function () {});
 /* Can't bind the same key again, the keys clash. */
 // wPrefix.addSuffix('space', ['ctrl', 'alt', 'cmd'], function () {});
 
 /* Window Selector */
 
 var windowSelector = new WindowSelector();
-Key.on('return', ['ctrl', 'alt', 'cmd'], function () {
+Key.on('space', ['alt'], function () {
     windowSelector.show();
 });
+
+Key.on('o', ['alt'], function () {
+    wPrefix.moveWindow({x: 0, y: 0, width: 1.0, height: 1.0});
+});
+Key.on(',', ['alt'], function () {
+    wPrefix.moveWindow({x: 0, y: 0, width: 0.5, height: 1.0});
+});
+Key.on('.', ['alt'], function () {
+    wPrefix.moveWindow({x: 0.5, y: 0, width: 0.5, height: 1.0});
+});
+
+function setAppHotkey(key, app) {
+    Key.on(key, ['alt'], function () {
+        var t = App.launch(app);
+        if(t !== undefined) {
+            t.focus();
+        }
+    });
+}
+
+setAppHotkey("1", "Terminal");
+setAppHotkey("2", "Google Chrome");
+setAppHotkey("p", "System Preferences");
 
 Phoenix.notify('Phoenix config loaded');
