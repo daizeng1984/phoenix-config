@@ -28,6 +28,9 @@ WindowSelector.prototype.setupKeys = function () {
     this.keys.push(new Key('escape', [], function () {
         that.dismiss();
     }));
+    this.keys.push(new Key('[', ['ctrl'], function () {
+        that.dismiss();
+    }));
     this.keys.push(new Key('tab', [], function () {
         that.selectNextWindow();
     }));
@@ -50,9 +53,15 @@ WindowSelector.prototype.setupKeys = function () {
         that.selectNextWindow();
     }));
     this.keys.push(new Key('return', [], function () {
+        if(!that.matching[that.selectedWindow]) {
+            that.selectNextWindow();
+        }
         that.focusWindow();
     }));
     this.keys.push(new Key('m', ['ctrl'], function () {
+        if(!that.matching[that.selectedWindow]) {
+            that.selectNextWindow();
+        }
         that.focusWindow();
     }));
     this.keys.push(new Key('delete', [], function () {
