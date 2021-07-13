@@ -69,9 +69,9 @@ wPrefix.addSuffix('[', ['ctrl'], function () {});
 /* Window Selector */
 
 var windowSelector = new WindowSelector();
-Key.on('space', ['alt'], function () {
-    windowSelector.show();
-});
+// Key.on('space', ['alt'], function () {
+//     windowSelector.show();
+// });
 
 Key.on('o', ['alt'], function () {
     wPrefix.moveWindow({x: 0, y: 0, width: 1.0, height: 1.0});
